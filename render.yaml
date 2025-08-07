@@ -5,6 +5,6 @@ services:
     buildCommand: |
       pip install -r requirements.txt
       cd frontend && npm install && npm run build
-      xcopy /E /Y frontend\build static
+      mkdir -p ../static && cp -r build/* ../static/
     startCommand: uvicorn app:app --host 0.0.0.0 --port 10000
     autoDeploy: true
