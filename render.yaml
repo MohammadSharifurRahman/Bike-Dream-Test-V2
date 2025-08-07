@@ -5,6 +5,9 @@ services:
     buildCommand: |
       pip install -r requirements.txt
       cd frontend && npm install && npm run build
-      mkdir -p ../static && cp -r build/* ../static/
-    startCommand: uvicorn app:app --host 0.0.0.0 --port 10000
+      mkdir -p static && cp -r frontend/build/* static/
+    startCommand: gunicorn api.server:app --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:10000
     autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10
